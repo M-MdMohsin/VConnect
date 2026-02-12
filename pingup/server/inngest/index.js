@@ -1,11 +1,11 @@
 import { Inngest } from "inngest";
-import User from "../models/user";
+import User from "../models/user.js";
 
 // Create a client to send and receive events
 export const inngest = new Inngest({ id: "my-app" });
 
 // Injest Function to save user data to database
-const syncUserCreation = inject.createFunction(
+const syncUserCreation = inngest.createFunction(
     {id: 'sync-user-from-clerk'},
     {event: 'clerk/user.created'},
     async ({event})=> {
@@ -32,7 +32,7 @@ const syncUserCreation = inject.createFunction(
 )
 
 // ingest function to update user data in database
-const syncUserUpdation = inject.createFunction(
+const syncUserUpdation = inngest.createFunction(
     {id: 'update-user-from-clerk'},
     {event: 'clerk/user.update'},
     async ({event})=> {
@@ -48,7 +48,7 @@ const syncUserUpdation = inject.createFunction(
 )
 
 // ingest function to delete user data in database
-const syncUserDeletion = inject.createFunction(
+const syncUserDeletion = inngest.createFunction(
     {id: 'delete-user-from-clerk'},
     {event: 'clerk/user.delete'},
     async ({event})=> {
