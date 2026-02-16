@@ -23,7 +23,7 @@ export const getUserData = async (req, res) => {
 export const updateUserData = async (req, res) => {
     try {
         const {userId} = req.auth()
-        const {username, bio, location, full_name} = req.body;
+        let {username, bio, location, full_name} = req.body;
 
         const tempUser = await User.findById(userId)
 
@@ -48,37 +48,24 @@ export const updateUserData = async (req, res) => {
 
         // for image upload using imagekit
         if(profile) {
-            const buffer = fs.readFileSync(profile.path)
-            const response = await imageKit.upload({
+            const buffer = fs.createReadStream(profile.path)
+            const response = await imageKit.files.upload({
                 file: buffer,
                 fileName: profile.originalname,
             })
-            const url = imageKit.url({
-                path: response.filePath,
-                transformation: [
-                    {quality: 'auto'},
-                    {format: 'webp'},
-                    {width: '512'}
-                ]
-            })
+            const url = `${response.url}?tr=w-512,q-auto,f-webp`;
             updatedData.profile_picture = url;
         }
 
         // for cover photo using imagekit
         if(cover) {
-            const buffer = fs.readFileSync(cover.path)
-            const response = await imageKit.upload({
+            const buffer = fs.createReadStream(cover.path)
+            
+            const response = await imageKit.files.upload({
                 file: buffer,
                 fileName: profile.originalname,
             })
-            const url = imageKit.url({
-                path: response.filePath,
-                transformation: [
-                    {quality: 'auto'},
-                    {format: 'webp'},
-                    {width: '512'}
-                ]
-            })
+            const url = `${response.url}?tr=w-512,q-auto,f-webp`;
             updatedData.cover_photo = url;
         }
         // Update query
