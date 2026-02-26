@@ -52,7 +52,7 @@ export const updateUserData = async (req, res) => {
         if(profile) {
             const buffer = fs.createReadStream(profile.path)
             const response = await imagekit.files.upload({
-                file: buffer,
+                file: profile.buffer,
                 fileName: profile.originalname,
             })
             const url = `${response.url}?tr=w-512,q-auto,f-webp`;
@@ -64,7 +64,7 @@ export const updateUserData = async (req, res) => {
             const buffer = fs.createReadStream(cover.path)
             
             const response = await imagekit.files.upload({
-                file: buffer,
+                file: cover.buffer,
                 fileName: cover.originalname,
             })
             const url = `${response.url}?tr=w-512,q-auto,f-webp`;
