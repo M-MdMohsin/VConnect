@@ -20,7 +20,8 @@
     "ingest": "^1.0.0",
     "inngest": "^3.52.0",
     "mongoose": "^9.2.0",
-    "multer": "^2.0.2"
+    "multer": "^2.0.2",
+    "nodemailer": "^8.0.1"
   },
   "devDependencies": {
     "nodemon": "^3.1.11"
