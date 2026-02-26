@@ -1,5 +1,5 @@
 
-import imagekit from "../config/imageKit.js"
+import imagekit from "../config/imagekit.js"
 import Connection from "../models/connection.js"
 import User from "../models/user.js"
 import fs from 'fs'
