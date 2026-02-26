@@ -31,7 +31,7 @@ export const updateUserData = async (req, res) => {
         !username && (username = tempUser.user_name)
 
         if(tempUser.user_name !== username) {
-            const user = User.findOne({username})
+            const user = await User.findOne({username})
             if(user) {
                 // we will not change if it is already taken
                 username = tempUser.user_name
@@ -64,7 +64,7 @@ export const updateUserData = async (req, res) => {
             
             const response = await imageKit.files.upload({
                 file: buffer,
-                fileName: profile.originalname,
+                fileName: cover.originalname,
             })
             const url = `${response.url}?tr=w-512,q-auto,f-webp`;
             updatedData.cover_photo = url;
