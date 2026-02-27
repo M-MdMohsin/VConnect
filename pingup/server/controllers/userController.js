@@ -2,7 +2,6 @@
 
 import Connection from "../models/connection.js"
 import User from "../models/user.js"
-import fs from 'fs'
 import imagekit from "./imagekit.js"
 
 
@@ -49,9 +48,7 @@ export const updateUserData = async (req, res) => {
         const cover = req.files.cover && req.files.cover[0]
 
         // for image upload using imagekit
-        console.log("profile file:", profile);
         if(profile) {
-            const buffer = fs.createReadStream(profile.path)
             const response = await imagekit.files.upload({
                 file: profile.buffer,
                 fileName: profile.originalname,
@@ -62,7 +59,6 @@ export const updateUserData = async (req, res) => {
 
         // for cover photo using imagekit
         if(cover) {
-            const buffer = fs.createReadStream(cover.path)
             
             const response = await imagekit.files.upload({
                 file: cover.buffer,
