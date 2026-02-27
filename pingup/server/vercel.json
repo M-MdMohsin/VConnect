@@ -1,8 +1,8 @@
 {
-  "buildCommand": "npm install",
+  "version": 2,
   "functions": {
     "server.js": {
-      "includeFiles": "config/**"
+      "runtime": "nodejs20.x"
     }
   },
   "routes": [
