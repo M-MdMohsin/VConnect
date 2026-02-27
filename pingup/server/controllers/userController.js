@@ -2,7 +2,7 @@
 
 import Connection from "../models/connection.js"
 import User from "../models/user.js"
-import imagekit from "./imagekit.js"
+import imagekit from "../config/imagekit.js"
 
 
 // Get user data using userId
@@ -23,6 +23,9 @@ export const getUserData = async (req, res) => {
 // update user data
 export const updateUserData = async (req, res) => {
     try {
+        //troubleshooting
+        console.log("FILES:", req.files);
+
         const {userId} = req.auth()
         let {username, bio, location, full_name} = req.body;
 
