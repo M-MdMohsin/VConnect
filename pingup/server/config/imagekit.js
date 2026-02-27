@@ -7,3 +7,6 @@ const imagekit = new ImageKit({
 });
 
 export default imagekit
+
+
+//changing node version in vercel from 24 to 20x
