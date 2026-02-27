@@ -1,10 +1,13 @@
-  {
-    
-    
-    "routes": [
-        {
-            "src": "/(.*)",
-            "dest": "server.js"
-        }
-    ]
+{
+  "functions": {
+    "server.js": {
+      "includeFiles": "server/config/**"
+    }
+  },
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "server.js"
+    }
+  ]
 }
