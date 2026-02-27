@@ -1,5 +1,4 @@
 
-import imagekit from "./imagekit.js"
 
 import Connection from "../models/connection.js"
 import User from "../models/user.js"
