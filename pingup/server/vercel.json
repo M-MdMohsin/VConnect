@@ -1,7 +1,7 @@
 {
   "functions": {
     "server.js": {
-      "includeFiles": "server/config/**"
+      "excludeFiles": "{node_modules,.git,.gitignore}"
     }
   },
   "routes": [
