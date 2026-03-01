@@ -1,8 +1,10 @@
 {
   "version": 2,
+  "buildCommand": "npm install",
+  "installCommand": "npm install",
   "functions": {
     "server.js": {
-      "includeFiles": "config/**"
+      "includeFiles": "{config/**,node_modules/**}"
     }
   },
   "routes": [

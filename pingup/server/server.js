@@ -19,8 +19,8 @@ app.get('/', (req, res)=> res.send('server is running'))
 app.use('/api/inngest', serve({client: inngest, functions}))   //Integrating ingest into project
 app.use('/api/user', userRouter)
 
-// const PORT = process.env.PORT || 4000;
-
+const PORT = process.env.PORT || 4000;
+console.log("Server is ruunning on: ", PORT)
 // app.listen(PORT, ()=> console.log(`Server is running on port ${PORT}`))
 
 export default app;
