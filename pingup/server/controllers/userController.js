@@ -23,13 +23,17 @@ export const getUserData = async (req, res) => {
 // update user data
 export const updateUserData = async (req, res) => {
     try {
-        //troubleshooting
-        console.log("FILES:", req.files);
-
+    
         const {userId} = req.auth()
         let {username, bio, location, full_name} = req.body;
 
-        const tempUser = await User.findById(userId)
+        const tempUser = await User.findById(userId);
+        if (!tempUser) {
+        return res.status(404).json({
+            success: false,
+            message: "User not found"
+        });
+        }
 
         !username && (username = tempUser.user_name)
 
@@ -41,7 +45,7 @@ export const updateUserData = async (req, res) => {
             }
         }
         const updatedData = {
-            username, 
+            user_name: username, 
             bio, 
             location, 
             full_name
@@ -49,11 +53,11 @@ export const updateUserData = async (req, res) => {
 
         const profile = req.files.profile && req.files.profile[0]
         const cover = req.files.cover && req.files.cover[0]
-
+ 
         // for image upload using imagekit
         if(profile) {
             const response = await imagekit.files.upload({
-                file: profile.buffer,
+                file: profile.buffer.toString("base64"),
                 fileName: profile.originalname,
             })
             const url = `${response.url}?tr=w-512,q-auto,f-webp`;
@@ -64,7 +68,7 @@ export const updateUserData = async (req, res) => {
         if(cover) {
             
             const response = await imagekit.files.upload({
-                file: cover.buffer,
+                file: cover.buffer.toString("base64"),
                 fileName: cover.originalname,
             })
             const url = `${response.url}?tr=w-512,q-auto,f-webp`;
