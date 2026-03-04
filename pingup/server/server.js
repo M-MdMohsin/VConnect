@@ -7,6 +7,7 @@ import {serve} from 'inngest/express'
 import { clerkMiddleware } from '@clerk/express'
 import userRouter from './routes/userRoutes.js';
 import postRouter from './routes/postRoutes.js';
+import storyRouter from './routes/storyRouter.js';
 
 const app = express();
 
@@ -20,6 +21,7 @@ app.get('/', (req, res)=> res.send('server is running'))
 app.use('/api/inngest', serve({client: inngest, functions}))   //Integrating ingest into project
 app.use('/api/user', userRouter)
 app.use('/api/post', postRouter)
+app.use('/api/story', storyRouter)
 
 const PORT = process.env.PORT || 4000;
 // console.log("Server is ruunning on: ", PORT)
