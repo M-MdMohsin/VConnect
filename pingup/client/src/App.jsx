@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route, Routes } from 'react-router-dom'
+import { Navigate, Route, Routes } from 'react-router-dom'
 import Login from './pages/Login'
 import Feed from './pages/Feed'
 import Messages from './pages/Messages'
@@ -12,23 +12,41 @@ import { useUser, useAuth } from '@clerk/clerk-react'
 import Layout from './pages/Layout'
 import {Toaster} from 'react-hot-toast'
 import { useEffect } from 'react'
+import { fetchUser } from './features/user/userSlice.js'
+import { useDispatch } from 'react-redux'
 
 const App = () => {
-  const {user} = useUser() 
+  const {user, isLoaded} = useUser() 
   const {getToken} = useAuth()
+  const dispatch = useDispatch()
 
   useEffect(()=> {
-    if(user) {
-      getToken().then((token)=> console.log(token))
-    }
-  },[user])
+    if(isLoaded) return;
+
+    const fetchData = async () => {
+      console.log("useEffect running", user);
+      if(user) {
+        const token = await getToken()
+        console.log("Token: ", token);
+        dispatch(fetchUser(token))
+      }
+    };
+    fetchData();
+  },[user, isLoaded, getToken, dispatch])
+
 
   return (
     <>
       <Toaster/>
       <Routes>
-        <Route path='/' element={!user ? <Login/> : <Layout/>}>
+        <Route path="/login" element={<Login />} />
+  
+        <Route
+          path="/"
+          element={!user ? <Login /> : <Layout/>}
+        >
           <Route index element={<Feed/>}/>
+          
           <Route path='messages' element={<Messages/>}/>
           <Route path='messages/:userId' element={<ChatBox/>}/>         // this is because the chatbox component require userid to access
           <Route path='connections' element={<Connections/>}/>
