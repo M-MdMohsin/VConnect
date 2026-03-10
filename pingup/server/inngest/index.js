@@ -13,12 +13,16 @@ const syncUserCreation = inngest.createFunction(
     {id: 'sync-user-from-clerk'},
     {event: 'clerk/user.created'},
     async ({event})=> {
-        const {id, first_name, last_name, email_addresses, image_url} = event.data
-        const email = email_addresses[0].email_address
+        const {id, firstName, lastName, emailAddresses, imageUrl} = event.data
+        const email = emailAddresses[0].email_address
         let username = email.split('@')[0]
 
         // Check availability of username
         const user = await User.findOne({username})
+ 
+
+        const existing = await User.findOne({ clerkId: id });
+        if (existing) return;
 
         if (user) {
             username = username + Math.floor(Math.random() * 10000)
@@ -26,9 +30,9 @@ const syncUserCreation = inngest.createFunction(
 
         const userData = {
             _id: id,
-            email: email_addresses[0].email_address,
-            full_name: first_name + " " + last_name,
-            profile_picture: image_url,
+            email: emailAddresses[0].email_address,
+            full_name: firstName + " " + lastName,
+            profile_picture: imageUrl,
             user_name: username
         }
         await User.create(userData)

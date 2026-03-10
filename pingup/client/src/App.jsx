@@ -21,7 +21,7 @@ const App = () => {
   const dispatch = useDispatch()
 
   useEffect(()=> {
-    if(isLoaded) return;
+    // if(isLoaded) return;
 
     const fetchData = async () => {
       console.log("useEffect running", user);
