@@ -13,9 +13,20 @@ const syncUserCreation = inngest.createFunction(
     {id: 'sync-user-from-clerk'},
     {event: 'clerk/user.created'},
     async ({event})=> {
-        const {id, firstName, lastName, emailAddresses, imageUrl} = event.data
-        const email = emailAddresses[0].emailAddress
+        const {id, firstName, lastName, imageUrl} = event.data
+
+        console.log("CLERK EVENT:", event.data)
+        
+        const email = event.data.primaryEmailAddress?.emailAddress
+
+        if (!email) {
+            console.log("Email not found")
+            return
+        }
+        
         let username = email.split('@')[0]
+
+
 
         // Check availability of username
         // const user = await User.findOne({username})
