@@ -23,7 +23,7 @@ const syncUserCreation = inngest.createFunction(
             console.log("Email not found")
             return
         }
-        
+
         let username = email.split('@')[0]
 
 
@@ -43,7 +43,7 @@ const syncUserCreation = inngest.createFunction(
 
         const userData = {
             _id: id,
-            email: emailAddresses[0].emailAddress,
+            email,
             full_name: firstName + " " + lastName,
             profile_picture: imageUrl,
             user_name: username
