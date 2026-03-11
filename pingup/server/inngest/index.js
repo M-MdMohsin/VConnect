@@ -33,7 +33,11 @@ const syncUserCreation = inngest.createFunction(
  
 
         const existing = await User.findById(id);
-        if (existing) return;
+        console.log("Existing user:", existing);
+        if (existing) {
+            console.log("User already exists, skipping...");
+            return;
+        }
 
         const userExists = await User.findOne({user_name : username})
 
