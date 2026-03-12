@@ -11,22 +11,20 @@ export const inngest = new Inngest({ id: "my-app" });
 // Injest Function to save user data to database
 const syncUserCreation = inngest.createFunction(
     {id: 'sync-user-from-clerk'},
-    {event: 'clerk/user.created'},
+    {event: 'user.created'},
     async ({event})=> {
         const {id, firstName, lastName, imageUrl} = event.data
 
-        console.log("CLERK EVENT:", event.data)
+        console.log("CLERK EVENT:", event.data.id)
         
         const email = event.data.primaryEmailAddress?.emailAddress
+        console.log("email is ", email)
 
         if (!email) {
             console.log("Email not found")
             return
         }
-
         let username = email.split('@')[0]
-
-
 
         // Check availability of username
         // const user = await User.findOne({username})
