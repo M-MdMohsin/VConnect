@@ -32,7 +32,7 @@ const CreatePost = () => {
               <img src={user.profile_picture} alt="" className='w-12 h-12 rounded-full shadow' />
                 <div>
                 <h2 className='font-semibold'>{user.full_name}</h2>
-                <p className='text-sm text-gray-500'>@{user.username}</p>
+                <p className='text-sm text-gray-500'>@{user.user_name}</p>
                 </div>
             </div>
 

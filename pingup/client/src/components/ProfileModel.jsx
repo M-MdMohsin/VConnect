@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 const ProfileModel = ({setShowEdit}) => {
     const user = useSelector((state)=>state.user.value);
     const [editForm, setEditForm] = useState({
-        username: user.username,
+        username: user.user_name,
         bio: user.bio,
         location: user.location,
         profile_picture: null,

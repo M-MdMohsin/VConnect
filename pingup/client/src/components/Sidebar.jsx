@@ -33,7 +33,7 @@ const Sidebar = ({SidebarOpen, setSidebarOpen}) => {
                 <UserButton />
                 <div>
                     <h1 className='text-sm font-medium'>{user.full_name}</h1>
-                    <p className='text-xs text-gray-500'>@{user.username}</p>
+                    <p className='text-xs text-gray-500'>@{user.user_name}</p>
                 </div>
             </div>
             <LogOut onClick={signOut} className='w-4.5 text-gray-400
