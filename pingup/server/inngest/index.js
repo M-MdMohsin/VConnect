@@ -11,7 +11,7 @@ export const inngest = new Inngest({ id: "my-app" });
 // Injest Function to save user data to database
 const syncUserCreation = inngest.createFunction(
     {id: 'sync-user-from-clerk'},
-    {event: 'user.created'},
+    {event: 'clerk/user.created'},
     async ({event})=> {
         const {id, first_name, last_name, image_url} = event.data
 
