@@ -13,11 +13,11 @@ const syncUserCreation = inngest.createFunction(
     {id: 'sync-user-from-clerk'},
     {event: 'user.created'},
     async ({event})=> {
-        const {id, firstName, lastName, imageUrl} = event.data
+        const {id, first_name, last_name, image_url} = event.data
 
         console.log("CLERK EVENT:", event.data.id)
         
-        const email = event.data.primaryEmailAddress?.emailAddress
+        const email = event.data.email_addresses?.[0]?.email_address
         console.log("email is ", email)
 
         if (!email) {
@@ -46,8 +46,8 @@ const syncUserCreation = inngest.createFunction(
         const userData = {
             _id: id,
             email,
-            full_name: firstName + " " + lastName,
-            profile_picture: imageUrl,
+            full_name: first_name + " " + last_name,
+            profile_picture: image_url,
             user_name: username
         }
         try {
