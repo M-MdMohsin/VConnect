@@ -29,7 +29,7 @@ const PostCard = ({post}) => {
                     <BadgeCheck className='w-4 h-4 text-blue-500' />
 
                 </div>
-                <div>@{post.user.username} . {moment(post.createdAt).fromNow()}</div>
+                <div>@{post.user.user_name} . {moment(post.createdAt).fromNow()}</div>
 
             </div>
 

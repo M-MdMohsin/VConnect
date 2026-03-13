@@ -17,7 +17,7 @@ const UserProfileInfo = ({user, posts, profileId, setShowEdit}) => {
                             <h1>{user.full_name}</h1>
                             <Verified className='w-6 h-6 text-blue-500'/>
                         </div>
-                        <p className='text-gray-600'>{user.username ? `@${user.username}` : 'Add a username'}</p>
+                        <p className='text-gray-600'>{user.user_name ? `@${user.user_name}` : 'Add a username'}</p>
                     </div>
                     {/* If user is not on others profile that means he is opening his profile so we will give edit button */}
                     {!profileId && <button onClick={() => setShowEdit(true)} className='flex items-center gap-2 border border-gray-300 hover:bg-gray-50 px-4 py-2 rounded-lg font-medium transition-colors mt-4 md:mt-0 cursor-pointer'>
