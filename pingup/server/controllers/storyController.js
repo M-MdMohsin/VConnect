@@ -3,18 +3,21 @@ import imagekit from '../config/imagekit.js';
 import Story from '../models/Story.js';
 import User from '../models/user.js';
 import { inngest } from '../inngest/index.js';
+
 //here we are using filestream but it is not suitable for vercel deployment so if error throw update it with memorystorage
+
 //Add User Story
 export const addUserStory = async(req,res) => {
     try {
         const {userId} = req.auth();
         const {content, media_type, background_color} = req.body;
         const media = req.file
+        console.log('This is media from backend ', media)
         let media_url = ''
 
         //upload media to imagekit
-        if(media_type === 'image' || media_type === 'video') {
-            const fileBuffer = fs.readFileSync(media.path)
+        if((media_type === 'image' || media_type === 'video') && media) {
+            const fileBuffer = media.buffer
             const response = await imagekit.files.upload({
                 file: fileBuffer,
                 fileName: media.originalname,
@@ -23,7 +26,7 @@ export const addUserStory = async(req,res) => {
         }
 
         //create Story
-        const story = Story.create({
+        const story = await Story.create({
             user: userId,
             content,
             media_url,
