@@ -96,7 +96,7 @@ export const discoverUser = async (req, res) => {
         const allUsers = await User.find(
             {   
                 $or: [
-                    {username: new RegExp(input, 'i')},
+                    {user_name: new RegExp(input, 'i')},
                     {email: new RegExp(input, 'i')},
                     {full_name: new RegExp(input, 'i')},
                     {location: new RegExp(input, 'i')},

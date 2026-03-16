@@ -12,7 +12,6 @@ export const addUserStory = async(req,res) => {
         const {userId} = req.auth();
         const {content, media_type, background_color} = req.body;
         const media = req.file
-        console.log('This is media from backend ', content)
         let media_url = ''
 
         //upload media to imagekit
