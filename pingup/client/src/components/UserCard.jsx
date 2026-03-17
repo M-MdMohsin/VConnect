@@ -1,15 +1,53 @@
 import React from 'react'
 import { dummyUserData } from '../assets/assets'
 import { MapPin, MessageCircle, Plus, UserPlus } from 'lucide-react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { useAuth } from '@clerk/clerk-react'
+import {useNavigate} from 'react-router-dom'
+import api from '../api/axios'
+import toast from 'react-hot-toast'
+import { fetchUser } from '../features/user/userSlice'
 
 const UserCard = ({user}) => {
     const currentuser = useSelector((state)=>state.user.value)
+    const { getToken } = useAuth()
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
 
     const handleFollow = async () => {
-
+        try {
+            const { data } = await api.post('/api/user/follow', {id: user._id}, {
+                headers: {Authorization: `Bearer ${await getToken()}`}
+            })
+            if(data.success) {
+                toast.success(data.message)
+                console.log('this data from usercard' + data)
+                toast('hakuna matata')
+                dispatch(fetchUser(await getToken()))
+            }else {
+                toast.error(data.message)
+            }
+        } catch (error) {
+            toast.error(error.message)
+        }
     }
     const handleConnectionRequest = async () => {
+        if(currentuser.connections.includes(user._id)) {
+            return navigate('/messages' + user._id)
+        }
+
+        try {
+            const { data } = await api.post('/api/user/connect', {id: user._id}, {
+                headers: {Authorization: `Bearer ${await getToken()}`}
+            })
+            if(data.success) {
+                toast.success(data.message)
+            }else {
+                toast.error(data.message)
+            }
+        } catch (error) {
+            toast.error(error.message)
+        }
 
     }
 
@@ -37,7 +75,7 @@ const UserCard = ({user}) => {
         </div>
         <div className='flex mt-4 gap-2'>
             {/* Follow Button */}
-            <button onClick={{handleFollow}} disabled={currentuser?.following.includes(user._id)}
+            <button onClick={handleFollow} disabled={currentuser?.following.includes(user._id)}
             className='w-full py-2 rounded-md flex justify-center items-center gap-2 bg-gradient-to-r from-indigo-500 to-purple-600
              hover:from-indigo-600 hover:to-purple-700 active:scale-95 transition text-white cursor-pointer'>
                 <UserPlus className='w-4 h-4'/>
