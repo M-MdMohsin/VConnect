@@ -1,10 +1,16 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { dummyMessagesData, dummyUserData } from '../assets/assets'
 import { ImageIcon, SendHorizonal } from 'lucide-react'
+import { useSelector } from 'react-redux'
+import { useParams } from 'react-router-dom'
+import { useAuth } from '@clerk/clerk-react'
+
 
 const ChatBox = () => {
 
-  const messages = dummyMessagesData
+  const messages = useSelector((state)=>state.message)
+  const { userId } = useParams()
+  const { getToken } = useAuth()
   const [text,setText] = useState('')
   const [image, setImage] = useState(null)
   const [user, setUser] = useState(dummyUserData)

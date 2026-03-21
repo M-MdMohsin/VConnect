@@ -22,7 +22,7 @@ const Connections = () => {
   const dispatch = useDispatch()
 
   const {connections,pendingConnections, followers, following} = useSelector((state)=>
-    state.Connections)
+    state.connection)
 
   const dataArray = [
     {label: 'Followers', value: followers, icon: Users},
@@ -117,7 +117,7 @@ const Connections = () => {
         <img src={user.profile_picture} className='rounded-full w-12 h-12 shadow-md mx-auto' />
         <div className='flex-1'>
           <p className='font-medium text-slate-700 '>{user.full_name}</p>
-          <p className='font-medium text-slate-500 '>@{user.username}</p>
+          <p className='font-medium text-slate-500 '>@{user.user_name}</p>
           <p className='font-medium text-slate-500 '>{user.bio.slice(0, 30)}...</p>
           <div className='flex max-sm:flex-col gap-2 mt-4'>
             {
