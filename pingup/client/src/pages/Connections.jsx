@@ -13,6 +13,7 @@ import { useAuth } from '@clerk/clerk-react'
 import { useDispatch } from 'react-redux'
 import { fetchConnections } from '../features/connections/connectionSlice.js'
 import api from '../api/axios.js'
+import toast from 'react-hot-toast'
 
 
 const Connections = () => {
