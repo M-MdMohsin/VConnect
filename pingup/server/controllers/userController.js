@@ -249,13 +249,13 @@ export const acceptConnectionRequest = async (req, res) => {
        await user.save() 
 
        const toUser = await User.findById(id);
-       user.connections.push(userId);
+       toUser.connections.push(userId);
        await toUser.save() 
 
        connection.status = 'accepted';
        await connection.save()
 
-       res.json({success: false, message: 'Connection accepted successfully'});
+       res.json({success: true, message: 'Connection accepted successfully'});
 
     } catch (error) {
         console.log(error);
