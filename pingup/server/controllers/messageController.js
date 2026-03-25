@@ -42,19 +42,11 @@ export const sendMessage = async (req, res) => {
         let message_type = image ? 'image' : 'text';
 
         if(message_type == 'image') {
-            const fileBuffer = fs.readFileSync(image.path);
             const response = await imagekit.files.upload({
-                file: fileBuffer,
+                file: image.buffer.toString("base64"),
                 fileName: image.originalname,
             });
-            media_url = imagekit.url({
-                path: response.filePath,
-                transformation: [
-                    {quality: 'auto'},
-                    {format: 'autowebp'},
-                    {width: '1280'},
-                ]
-            })
+            media_url = response.url
         }
         const message = await Message.create({
             from_user_id: userId,
