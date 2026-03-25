@@ -17,24 +17,21 @@ import { useDispatch } from 'react-redux'
 import { fetchConnections } from './features/connections/connectionSlice.js'
 
 const App = () => {
-  const {user, isLoaded} = useUser() 
+  const {user} = useUser() 
   const {getToken} = useAuth()
   const dispatch = useDispatch()
 
   useEffect(()=> {
-    // if(isLoaded) return;
 
     const fetchData = async () => {
-      console.log("useEffect running", user);
       if(user) {
         const token = await getToken()
-        console.log("Token: ", token);
         dispatch(fetchUser(token))
         dispatch(fetchConnections(token))
       }
     };
     fetchData();
-  },[user, isLoaded, getToken, dispatch])
+  },[user, getToken, dispatch])
 
 
   return (

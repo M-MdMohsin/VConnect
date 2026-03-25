@@ -21,6 +21,7 @@ const ChatBox = () => {
 
   const dispatch = useDispatch()
   const connections = useSelector((state)=> state.connection.connections)
+  console.log("this is from chatbox.js: ", connections)
 
   console.log("messages type:", typeof messages, messages)
 

@@ -29,7 +29,8 @@ const messagesSlice = createSlice({
     extraReducers: (builder)=> {
         builder.addCase(fetchMessages.fulfilled, (state, action)=> {
             if(action.payload) {
-                state.messages = Array.isArray(action.payload) ? action.payload : []
+                // state.messages = Array.isArray(action.payload) ? action.payload.messages : []
+                state.messages = action.payload.messages
             }
         })
     }
