@@ -1,3 +1,6 @@
+//the project is almost over there we are using buffer memory instead of file system (fs) \
+
+
 import fs from 'fs'
 import imagekit from '../config/imagekit.js';
 import { connections } from "mongoose";
