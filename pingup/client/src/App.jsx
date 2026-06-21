@@ -10,12 +10,13 @@ import Profile from './pages/Profile'
 import CreatePost from './pages/CreatePost'
 import { useUser, useAuth } from '@clerk/clerk-react'
 import Layout from './pages/Layout'
-import {Toaster} from 'react-hot-toast'
+import toast, {Toaster} from 'react-hot-toast'
 import { useEffect } from 'react'
 import { fetchUser } from './features/user/userSlice.js'
 import { useDispatch } from 'react-redux'
 import { fetchConnections } from './features/connections/connectionSlice.js'
 import { addMessage } from './features/messages/messagesSlice.js'
+import Notification from './components/Notification.jsx'
 
 const App = () => {
   const {user} = useUser() 
@@ -50,7 +51,9 @@ const App = () => {
         if(pathnameRef.current === ('/messages/' + message.from_user_id._id)) {
           dispatch(addMessage(message))
         }else {
-
+          toast.custom(()=>(
+            <Notification t={t} message={message}/>
+          ), {position: "bottom-right"})
         }
       }
       return ()=> {
