@@ -101,7 +101,7 @@ export const getChatMessages = async (req,res) => {
 export const getUserRecentMessage = async (req,res) => {
     try {
         const {userId} = req.auth();
-        const messages = await Message.find({to_user_id: userId}.populate('from_user_id  to_user_id')).sort({
+        const messages = await Message.find({to_user_id: userId}).populate('from_user_id  to_user_id').sort({
             created_at: -1
         });
 
