@@ -1,4 +1,4 @@
-import { Inngest, step } from "inngest";
+import { Inngest } from "inngest";
 import User from "../models/user.js";
 import Connection from "../models/connection.js";
 import sendEmail from "../config/nodemailer.js";
@@ -10,8 +10,8 @@ export const inngest = new Inngest({ id: "my-app" });
 
 // Injest Function to save user data to database
 const syncUserCreation = inngest.createFunction(
-    {id: 'sync-user-from-clerk'},
-    {event: 'clerk/user.created'},
+    {id: 'sync-user-from-clerk',
+    triggers: {event: 'clerk/user.created'}},
     async ({event})=> {
         const {id, first_name, last_name, image_url} = event.data
 
@@ -61,8 +61,7 @@ const syncUserCreation = inngest.createFunction(
 
 // ingest function to update user data in database
 const syncUserUpdation = inngest.createFunction(
-    {id: 'update-user-from-clerk'},
-    {event: 'clerk/user.update'},
+    {id: 'update-user-from-clerk', triggers: {event: 'clerk/user.updated'}},
     async ({event})=> {
         const {id, first_name, last_name, email_addresses, image_url} = event.data
         
@@ -77,8 +76,7 @@ const syncUserUpdation = inngest.createFunction(
 
 // ingest function to delete user data in database
 const syncUserDeletion = inngest.createFunction(
-    {id: 'delete-user-from-clerk'},
-    {event: 'clerk/user.delete'},
+    {id: 'delete-user-from-clerk', triggers: {event: 'clerk/user.deleted'}},
     async ({event})=> {
         const {id, first_name, last_name, email_addresses, image_url} = event.data
         await User.findByIdAndDelete(id)
@@ -89,8 +87,7 @@ const syncUserDeletion = inngest.createFunction(
 
 // Ingest function to send reminder when a new connection request is added
 const sendNewConnectionRequestReminder = inngest.createFunction(
-    {id: "send-new-connection-request-reminder"},
-    {event: "app/connection-request"},
+    {id: "send-new-connection-request-reminder", triggers: {event: "app/connection-request"}},
     async ({event, step}) => {
         const {connectionId} = event.data;
 
@@ -150,8 +147,7 @@ const sendNewConnectionRequestReminder = inngest.createFunction(
 
 //inngest Function to delete story after 24 hours
 const deleteStory = inngest.createFunction(
-    {id: 'story-delete'},
-    {event: 'app/story.delete'},
+    {id: 'story-delete', triggers: {event: 'app/story.delete'}},
     async ({event, step}) => {
         const {storyId} = event.data;
         const in24Hours = new Date(Date.now() + 24 * 60 * 60 * 1000)
@@ -164,8 +160,7 @@ const deleteStory = inngest.createFunction(
 )
 
 const sendNotificationOfUnseenMessages = inngest.createFunction(
-    {id: "send-unseen-messages-notification"},
-    {cron: "TZ=America/New_York 0 9 * * *"}, //Every 9 AM
+    {id: "send-unseen-messages-notification", triggers: {cron: "TZ=America/New_York 0 9 * * *"}}, //Every 9 AM
     async ({step}) => {
         const messages = await Message.find({seen: false}).populate('to_user_id');
         const unseenCount = {}

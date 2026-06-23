@@ -4,7 +4,7 @@
   "installCommand": "npm install",
   "functions": {
     "server.js": {
-      "includeFiles": "{config/**,node_modules/**}"
+      "includeFiles": "{config/**,models/**,routes/**,controllers/**,middleware/**,inngest/**,node_modules/**}"
     }
   },
   "routes": [
@@ -13,4 +13,4 @@
       "dest": "server.js"
     }
   ]
-}
+}

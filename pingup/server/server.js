@@ -25,8 +25,11 @@ app.use('/api/post', postRouter)
 app.use('/api/story', storyRouter)
 app.use('/api/message', messageRouter)
 
-const PORT = process.env.PORT || 4000;
-// console.log("Server is ruunning on: ", PORT)
-app.listen(PORT, ()=> console.log(`Server is running on port ${PORT}`))
+// Only start the HTTP server in local development.
+// On Vercel (serverless), the exported app is used directly as the handler.
+if (process.env.NODE_ENV !== 'production') {
+    const PORT = process.env.PORT || 4000;
+    app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
+}
 
-// export default app;
+export default app;
