@@ -8,6 +8,7 @@ import Message from "../models/Message.js";
 // Create a client to send and receive events
 export const inngest = new Inngest({ id: "my-app" });
 
+
 // Injest Function to save user data to database
 const syncUserCreation = inngest.createFunction(
     {id: 'sync-user-from-clerk',
